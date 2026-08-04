@@ -4,14 +4,41 @@ Task 10 — Generation with Citation.
 Mục tiêu:
     1. Reorder documents để tránh "lost in the middle"
     2. Format context có thông tin nguồn
-    3. Sinh câu trả lời có citation
+    3. Sinh câu trả lời có citation (gọi LLM qua OpenRouter, fallback OpenAI)
 
 Lưu ý:
     - Nếu chưa có API key LLM, vẫn phải trả về dict có "answer"
     - Test chỉ cần function hoạt động đúng format
 """
 
+import os
+
+from dotenv import load_dotenv
+
 from .task9_retrieval_pipeline import retrieve
+
+load_dotenv()
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+
+# Model free tier OpenRouter dùng cho bài lab (giới hạn ~50 req/ngày).
+OPENROUTER_MODEL = "inclusionai/ling-3.0-flash:free"
+OPENAI_MODEL = "gpt-4o-mini"
+
+# Temperature thấp + top_p cao: ưu tiên độ chính xác factual (giảm bịa đặt),
+# vẫn giữ đủ tự nhiên khi diễn giải lại nội dung nguồn.
+TEMPERATURE = 0.3
+TOP_P = 0.9
+
+SYSTEM_PROMPT = """Bạn là trợ lý hỗ trợ khách hàng thương mại điện tử.
+Chỉ trả lời dựa vào các tài liệu trong phần NGỮ CẢNH được cung cấp, không suy đoán
+hay bịa thêm thông tin ngoài ngữ cảnh.
+Với MỌI khẳng định trong câu trả lời, phải chèn ngay trích dẫn nguồn theo định dạng
+[Tên nguồn] lấy đúng từ nhãn "Nguồn:" tương ứng trong ngữ cảnh.
+Nếu ngữ cảnh không đủ thông tin để trả lời, hãy trả lời:
+"Tôi chưa đủ thông tin để xác nhận điều này." thay vì đoán.
+Trả lời ngắn gọn, rõ ràng, bằng tiếng Việt."""
 
 
 def reorder_for_llm(chunks: list[dict]) -> list[dict]:
@@ -60,6 +87,51 @@ def format_context(chunks: list[dict]) -> str:
     return "\n".join(lines).strip()
 
 
+def _call_llm(query: str, context: str) -> str | None:
+    """
+    Gọi LLM để sinh câu trả lời có citation.
+
+    Thử OpenRouter trước (model free tier), nếu thiếu key/lỗi (vd 429 hết quota)
+    thì thử OpenAI. Trả về None nếu không có key nào hoặc cả hai đều thất bại —
+    caller sẽ dùng câu trả lời mock làm fallback an toàn.
+    """
+    providers = []
+    if OPENROUTER_API_KEY:
+        providers.append((OPENROUTER_API_KEY, "https://openrouter.ai/api/v1", OPENROUTER_MODEL))
+    if OPENAI_API_KEY:
+        providers.append((OPENAI_API_KEY, None, OPENAI_MODEL))
+
+    if not providers:
+        return None
+
+    try:
+        from openai import OpenAI
+    except ImportError:
+        return None
+
+    user_prompt = f"NGỮ CẢNH:\n{context}\n\nCÂU HỎI: {query}"
+
+    for api_key, base_url, model in providers:
+        try:
+            client = OpenAI(api_key=api_key, base_url=base_url) if base_url else OpenAI(api_key=api_key)
+            response = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=TEMPERATURE,
+                top_p=TOP_P,
+            )
+            content = response.choices[0].message.content
+            if content and content.strip():
+                return content.strip()
+        except Exception:
+            continue  # thử provider fallback tiếp theo
+
+    return None
+
+
 def generate_with_citation(query: str, top_k: int = 5) -> dict:
     """
     Sinh câu trả lời có citation.
@@ -68,7 +140,8 @@ def generate_with_citation(query: str, top_k: int = 5) -> dict:
         {
             "answer": str,
             "context": str,
-            "retrieved_chunks": list[dict]
+            "retrieved_chunks": list[dict],
+            "sources": list[dict]  # alias của retrieved_chunks, dùng cho app.py
         }
     """
     retrieved_chunks = retrieve(query, top_k=top_k)
@@ -81,8 +154,19 @@ def generate_with_citation(query: str, top_k: int = 5) -> dict:
             "answer": answer,
             "context": context,
             "retrieved_chunks": reordered_chunks,
+            "sources": reordered_chunks,
         }
 
+    llm_answer = _call_llm(query, context)
+    if llm_answer:
+        return {
+            "answer": llm_answer,
+            "context": context,
+            "retrieved_chunks": reordered_chunks,
+            "sources": reordered_chunks,
+        }
+
+    # Fallback mock: dùng khi chưa có API key hoặc LLM call thất bại (vd hết rate limit free tier)
     source_names = []
     for chunk in reordered_chunks[:2]:
         metadata = chunk.get("metadata", {}) or {}
@@ -106,6 +190,7 @@ def generate_with_citation(query: str, top_k: int = 5) -> dict:
         "answer": answer,
         "context": context,
         "retrieved_chunks": reordered_chunks,
+        "sources": reordered_chunks,
     }
 
 
