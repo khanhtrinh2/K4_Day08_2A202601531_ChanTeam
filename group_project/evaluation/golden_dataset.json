@@ -1,128 +1,17 @@
 [
-<<<<<<< HEAD
   {
-    "question": "Người mua có thể yêu cầu trả hàng/hoàn tiền trong bao lâu với đơn hàng thông thường?",
-    "expected_answer": "Đối với đơn hàng thông thường, người mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 7 ngày kể từ khi đơn hàng được cập nhật trạng thái giao hàng thành công.",
-    "expected_context": "chinh-sach-tra-hang-hoan-tien.md - TIMEFRAME FOR SUBMITTING RETURN REQUESTS"
+    "question": "Người mua có thể yêu cầu trả hàng/hoàn tiền trong thời hạn bao lâu sau khi nhận hàng?",
+    "expected_answer": "Trong vòng 15 ngày kể từ khi giao hàng thành công (24 giờ đối với thực phẩm tươi sống/đông lạnh).",
+    "expected_context": "Trang Returns and Refunds Policy, mục Return/Refund Eligibility"
   },
   {
-    "question": "Shopee Mall cho phép yêu cầu trả hàng/hoàn tiền trong bao lâu?",
-    "expected_answer": "Đối với đơn hàng Shopee Mall, người mua có thể gửi yêu cầu trả hàng/hoàn tiền trong vòng 15 ngày kể từ khi đơn hàng được cập nhật trạng thái giao hàng thành công.",
-    "expected_context": "chinh-sach-tra-hang-hoan-tien.md - TIMEFRAME FOR SUBMITTING RETURN REQUESTS"
+    "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
+    "expected_answer": "ShopeePay Wallet, thẻ tín dụng/ghi nợ, trả góp qua thẻ, QR Code, chuyển khoản qua app ngân hàng, thẻ NAPAS, Apple Pay, Google Pay, và COD.",
+    "expected_context": "Trang Payment Methods Overview"
   },
   {
-    "question": "Nếu quá hạn yêu cầu trả hàng/hoàn tiền thì điều gì xảy ra?",
-    "expected_answer": "Sau khi hết thời hạn yêu cầu, Shopee Guarantee sẽ hết hiệu lực, tiền thanh toán sẽ tự động chuyển cho người bán và Shopee không thể hỗ trợ quyết định khiếu nại trả hàng.",
-    "expected_context": "chinh-sach-tra-hang-hoan-tien.md - TIMEFRAME FOR SUBMITTING RETURN REQUESTS"
-  },
-  {
-    "question": "Shopee hỗ trợ miễn phí phí vận chuyển trả hàng trong trường hợp nào?",
-    "expected_answer": "Shopee hỗ trợ miễn phí 100% chi phí vận chuyển trả hàng nếu người mua sử dụng đúng mã vận đơn trả hàng được tạo trực tiếp trên ứng dụng Shopee.",
-    "expected_context": "chinh-sach-tra-hang-hoan-tien.md - RETURN SHIPPING FEES AND COVERAGE"
-  },
-  {
-    "question": "Các sản phẩm nào không áp dụng chính sách trả hàng/hoàn tiền?",
-    "expected_answer": "Các sản phẩm kỹ thuật số, voucher điện tử, e-voucher, nạp tiền điện thoại, thẻ game, thực phẩm tươi sống, đồ ăn nhanh, hàng có hạn sử dụng ngắn, đồ lót, đồ tập, mỹ phẩm đã mở seal hoặc đã qua sử dụng và các sản phẩm bị hư hỏng do lỗi từ phía người mua sẽ không áp dụng chính sách trả hàng/hoàn tiền.",
-    "expected_context": "chinh-sach-tra-hang-hoan-tien.md - NON-RETURNABLE PRODUCTS AND EXCEPTIONS"
-  },
-  {
-    "question": "Hoàn tiền về Ví ShopeePay mất bao lâu?",
-    "expected_answer": "Nếu hoàn tiền về Ví ShopeePay, thời gian xử lý là trong vòng 24 giờ làm việc sau khi yêu cầu được phê duyệt.",
-    "expected_context": "chinh-sach-tra-hang-hoan-tien.md - REFUND METHODS AND PROCESSING TIMELINE"
-  },
-  {
-    "question": "Shopee hỗ trợ những phương thức thanh toán nào cho người mua?",
-    "expected_answer": "Shopee hỗ trợ nhiều phương thức thanh toán cho người mua như COD, ví điện tử liên kết, thẻ tín dụng hoặc thẻ ghi nợ và các hình thức thanh toán trả góp hoặc mua trước trả sau.",
-    "expected_context": "phuong-thuc-thanh-toan.md - PAYMENT OPTIONS AVAILABLE FOR BUYERS"
-  },
-  {
-    "question": "Shopee có cho phép thanh toán ngoài nền tảng không?",
-    "expected_answer": "Không. Tất cả giao dịch thanh toán phải thực hiện qua hệ thống thanh toán chính thức của Shopee và nghiêm cấm mọi hành vi thỏa thuận thanh toán ngoài nền tảng.",
-    "expected_context": "phuong-thuc-thanh-toan.md - GENERAL PROVISIONS ON PAYMENT METHODS"
-  },
-  {
-    "question": "Người bán có thể thiết lập rút tiền tự động theo lịch nào?",
-    "expected_answer": "Người bán có thể thiết lập rút tiền tự động hàng tuần vào thứ 3 hoặc hàng tháng vào ngày 1 và ngày 15 về tài khoản ngân hàng chính thức.",
-    "expected_context": "phuong-thuc-thanh-toan.md - SELLER BALANCE MANAGEMENT & WITHDRAWALS"
-  },
-  {
-    "question": "Thời gian xử lý rút tiền cho người bán là bao lâu?",
-    "expected_answer": "Thời gian xử lý chuyển tiền cho người bán là từ 24 giờ đến 48 giờ làm việc, không tính thứ 7, chủ nhật và ngày lễ.",
-    "expected_context": "phuong-thuc-thanh-toan.md - SELLER BALANCE MANAGEMENT & WITHDRAWALS"
-  },
-  {
-    "question": "Shopee cảnh báo gì về bảo mật thanh toán và mã OTP?",
-    "expected_answer": "Shopee không bao giờ yêu cầu người dùng cung cấp mã OTP, mật khẩu ví hoặc số thẻ tín dụng qua điện thoại hay tin nhắn cá nhân.",
-    "expected_context": "phuong-thuc-thanh-toan.md - TRANSACTION SECURITY AND ANTI-FRAUD MEASURES"
-  },
-  {
-    "question": "Người bán không được đăng bán những loại sản phẩm nào?",
-    "expected_answer": "Người bán không được đăng bán các sản phẩm thuộc danh mục cấm hoặc hạn chế như hàng giả, hàng xâm phạm quyền sở hữu trí tuệ, hàng hóa độc hại, sản phẩm không an toàn, động vật hoang dã nguy cấp và các mặt hàng bị pháp luật hoặc sàn cấm.",
-    "expected_context": "quy-dinh-dang-ban-san-pham.md - PROHIBITED AND RESTRICTED PRODUCT LISTINGS"
-  },
-  {
-    "question": "Tiêu đề sản phẩm hợp lệ trên Shopee cần tuân theo nguyên tắc gì?",
-    "expected_answer": "Tiêu đề sản phẩm phải bắt đầu bằng tên sản phẩm, thương hiệu và thông số; phải viết bằng tiếng Việt có dấu hoặc tiếng Anh, không chứa từ khóa rác và không giả danh.",
-    "expected_context": "quy-dinh-dang-ban-san-pham.md - PRODUCT TITLE, IMAGES AND DESCRIPTION STANDARDS"
-  },
-  {
-    "question": "Người bán có được đăng giá 0 đồng hoặc tăng giá rồi giảm giá ảo không?",
-    "expected_answer": "Không. Người bán không được đăng giá 0 đồng, giá ảo hoặc thực hiện hành vi tăng giá rồi giảm giá ảo trước khuyến mãi.",
-    "expected_context": "quy-dinh-dang-ban-san-pham.md - PRICE SETTING AND INVENTORY MANAGEMENT RULES"
-  },
-  {
-    "question": "Nếu người bán đạt 12 điểm Sao Quả Tạ thì bị xử lý thế nào?",
-    "expected_answer": "Nếu người bán đạt từ 12 điểm Sao Quả Tạ trở lên, họ có thể bị tước quyền truy cập và khóa tài khoản kinh doanh tạm thời hoặc vĩnh viễn.",
-    "expected_context": "quy-dinh-dang-ban-san-pham.md - PENALTY POINTS SYSTEM AND ENFORCEMENT MEASURES"
-  },
-  {
-    "question": "Làm thế nào để theo dõi chi tiết vận chuyển của đơn hàng trên Shopee?",
-    "expected_answer": "Người dùng mở ứng dụng Shopee, vào mục Tôi, chọn Đơn mua, chọn đơn hàng cần theo dõi rồi vào phần Thông tin vận chuyển để xem lịch sử di chuyển của đơn hàng.",
-    "expected_context": "article_01.md - Hướng dẫn theo dõi đơn hàng"
-  },
-  {
-    "question": "Sau khi đặt hàng, khi nào người dùng còn có thể đổi phương thức thanh toán?",
-    "expected_answer": "Người dùng chỉ có thể đổi phương thức thanh toán sau khi đặt hàng khi đơn hàng chưa hoàn tất thanh toán và còn ở trạng thái Chờ thanh toán.",
-    "expected_context": "article_02.md - Cách đổi phương thức thanh toán"
-  },
-  {
-    "question": "Khi gửi yêu cầu trả hàng/hoàn tiền, người mua cần chuẩn bị những bằng chứng nào?",
-    "expected_answer": "Người mua cần chuẩn bị video mở hộp hoặc đồng kiểm, hình ảnh chi tiết lỗi sản phẩm và hình ảnh phiếu giao hàng hoặc mã vận đơn.",
-    "expected_context": "article_03.md - Quy trình cung cấp bằng chứng trả hàng / hoàn tiền"
-  },
-  {
-    "question": "Shopee xem xét bằng chứng hoàn tiền trong bao lâu?",
-    "expected_answer": "Shopee sẽ xem xét bằng chứng hoàn tiền trong vòng 24 đến 48 giờ làm việc.",
-    "expected_context": "article_03.md - Quy trình cung cấp bằng chứng trả hàng / hoàn tiền"
-  },
-  {
-    "question": "Thời gian giao hàng của hàng quốc tế trên Shopee thường là bao lâu?",
-    "expected_answer": "Hàng quốc tế trên Shopee thường có thời gian giao hàng từ 7 đến 14 ngày tùy thuộc vào quá trình thông quan và vận chuyển.",
-    "expected_context": "article_04.md - Hướng dẫn mua hàng xuyên biên giới"
-  },
-  {
-    "question": "Người dùng có thể kết hợp những loại voucher nào trong một đơn hàng Shopee?",
-    "expected_answer": "Người dùng có thể kết hợp đồng thời voucher shop, Shopee voucher và voucher phương thức thanh toán trong một đơn hàng.",
-    "expected_context": "article_05.md - Cách sử dụng mã giảm giá và Voucher trên Shopee"
+    "question": "Người bán không được đăng bán những sản phẩm nào?",
+    "expected_answer": "Hàng giả/nhái, sản phẩm bất hợp pháp, vi phạm sở hữu trí tuệ, và các mặt hàng nằm trong danh sách cấm của sàn.",
+    "expected_context": "Trang Product Listing Regulations, mục Prohibited Content"
   }
-=======
-  {"question":"Người mua có thể gửi yêu cầu trả hàng/hoàn tiền trong bao lâu với đơn Shopee Standard?","expected_answer":"Trong vòng 7 ngày kể từ khi đơn hàng được cập nhật Giao hàng thành công.","expected_context":"chinh-sach-tra-hang-hoan-tien — TIMEFRAME FOR SUBMITTING RETURN REQUESTS"},
-  {"question":"Đơn Shopee Mall có thời hạn trả hàng là bao lâu?","expected_answer":"Trong vòng 15 ngày kể từ khi giao hàng thành công.","expected_context":"chinh-sach-tra-hang-hoan-tien — TIMEFRAME FOR SUBMITTING RETURN REQUESTS"},
-  {"question":"Người bán có bao lâu để phản hồi yêu cầu trả hàng?","expected_answer":"48 giờ để đồng ý hoặc khiếu nại.","expected_context":"chinh-sach-tra-hang-hoan-tien — STEP-BY-STEP RETURN PROCESS"},
-  {"question":"Shopee có hỗ trợ phí vận chuyển trả hàng không?","expected_answer":"Shopee hỗ trợ miễn phí 100% phí trả hàng khi dùng đúng mã vận đơn tạo trên ứng dụng.","expected_context":"chinh-sach-tra-hang-hoan-tien — RETURN SHIPPING FEES AND COVERAGE"},
-  {"question":"Sản phẩm nào không áp dụng trả hàng/hoàn tiền?","expected_answer":"Sản phẩm kỹ thuật số, voucher điện tử, thực phẩm tươi sống, đồ lót, mỹ phẩm đã mở seal hoặc đã qua sử dụng là các trường hợp không áp dụng.","expected_context":"chinh-sach-tra-hang-hoan-tien — NON-RETURNABLE PRODUCTS AND EXCEPTIONS"},
-  {"question":"Hoàn tiền về ShopeePay mất bao lâu?","expected_answer":"Trong vòng 24 giờ làm việc sau khi yêu cầu được phê duyệt.","expected_context":"chinh-sach-tra-hang-hoan-tien — REFUND METHODS AND PROCESSING TIMELINE"},
-  {"question":"Hoàn tiền thẻ tín dụng hoặc thẻ ghi nợ mất bao lâu?","expected_answer":"Từ 7 đến 14 ngày làm việc tùy theo ngân hàng.","expected_context":"chinh-sach-tra-hang-hoan-tien — REFUND METHODS AND PROCESSING TIMELINE"},
-  {"question":"Shopee hỗ trợ các phương thức thanh toán nào?","expected_answer":"COD, ShopeePay, thẻ tín dụng hoặc ghi nợ và mua trước trả sau.","expected_context":"phuong-thuc-thanh-toan — PAYMENT OPTIONS AVAILABLE FOR BUYERS"},
-  {"question":"Có được thanh toán ngoài nền tảng Shopee không?","expected_answer":"Không; nghiêm cấm thỏa thuận thanh toán ngoài nền tảng.","expected_context":"phuong-thuc-thanh-toan — GENERAL PROVISIONS ON PAYMENT METHODS"},
-  {"question":"Người bán có thể rút tiền tự động vào những thời điểm nào?","expected_answer":"Hàng tuần vào thứ 3 hoặc hàng tháng vào ngày 1 và 15.","expected_context":"phuong-thuc-thanh-toan — SELLER BALANCE MANAGEMENT & WITHDRAWALS"},
-  {"question":"Rút tiền thủ công của người bán được xử lý trong bao lâu?","expected_answer":"Từ 24 đến 48 giờ làm việc, không tính thứ 7, chủ nhật và ngày lễ.","expected_context":"phuong-thuc-thanh-toan — SELLER BALANCE MANAGEMENT & WITHDRAWALS"},
-  {"question":"Shopee có yêu cầu cung cấp OTP qua điện thoại không?","expected_answer":"Không; Shopee không bao giờ yêu cầu cung cấp OTP, mật khẩu ví hoặc số thẻ qua điện thoại hay tin nhắn cá nhân.","expected_context":"phuong-thuc-thanh-toan — TRANSACTION SECURITY AND ANTI-FRAUD MEASURES"},
-  {"question":"Người bán bị cấm đăng những loại sản phẩm nào?","expected_answer":"Các sản phẩm thuộc danh mục cấm hoặc hạn chế, gồm hàng nguy hiểm, hàng giả hoặc vi phạm quyền sở hữu trí tuệ và hàng hóa bị cấm khác.","expected_context":"quy-dinh-dang-ban-san-pham — PROHIBITED AND RESTRICTED PRODUCT LISTINGS"},
-  {"question":"Tiêu đề sản phẩm phải tuân thủ tiêu chuẩn gì?","expected_answer":"Phải bắt đầu bằng tên sản phẩm, thương hiệu và thông số; viết bằng tiếng Việt có dấu hoặc tiếng Anh, không chứa từ khóa rác hay giả danh.","expected_context":"quy-dinh-dang-ban-san-pham — PRODUCT TITLE, IMAGES AND DESCRIPTION STANDARDS"},
-  {"question":"Có được đăng giá 0 đồng hoặc giá ảo không?","expected_answer":"Không; nghiêm cấm đăng giá 0 đồng, giá ảo hoặc giá khác xa giá trị sản phẩm.","expected_context":"quy-dinh-dang-ban-san-pham — PRICE SETTING AND INVENTORY MANAGEMENT RULES"},
-  {"question":"Vi phạm đăng bán hàng cấm hoặc hàng giả bị phạt thế nào?","expected_answer":"Sản phẩm bị xóa và người bán bị cộng từ 2 đến 4 điểm Sao Quả Tạ.","expected_context":"quy-dinh-dang-ban-san-pham — PENALTY POINTS SYSTEM AND ENFORCEMENT MEASURES"},
-  {"question":"Khi nào người bán có thể bị khóa tài khoản?","expected_answer":"Từ 12 điểm Sao Quả Tạ trở lên có thể bị tước quyền truy cập và khóa tài khoản tạm thời hoặc vĩnh viễn.","expected_context":"quy-dinh-dang-ban-san-pham — PENALTY POINTS SYSTEM AND ENFORCEMENT MEASURES"},
-  {"question":"Làm sao để theo dõi đơn hàng đang giao?","expected_answer":"Mở ứng dụng, vào mục Tôi rồi Đơn mua, chọn trạng thái Đang giao và xem Thông tin vận chuyển trong Chi tiết đơn hàng.","expected_context":"article_01 — Hướng dẫn theo dõi đơn hàng"}
->>>>>>> 9370463cbe0f03f7c333a635895dfc9a3ade8793
 ]
