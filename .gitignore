@@ -21,7 +21,7 @@ pageindex_pdfs/
 # IDE
 .vscode/
 .idea/
-
+.claude
 # OS
 .DS_Store
 Thumbs.db
