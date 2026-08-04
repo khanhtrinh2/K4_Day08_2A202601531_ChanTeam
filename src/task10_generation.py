@@ -12,6 +12,9 @@ Lưu ý:
 """
 
 import os
+import re
+import unicodedata
+from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -25,6 +28,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 # Model free tier OpenRouter dùng cho bài lab (giới hạn ~50 req/ngày).
 OPENROUTER_MODEL = "inclusionai/ling-3.0-flash:free"
 OPENAI_MODEL = "gpt-4o-mini"
+STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
 
 # Temperature thấp + top_p cao: ưu tiên độ chính xác factual (giảm bịa đặt),
 # vẫn giữ đủ tự nhiên khi diễn giải lại nội dung nguồn.
@@ -39,6 +43,74 @@ Với MỌI khẳng định trong câu trả lời, phải chèn ngay trích d�
 Nếu ngữ cảnh không đủ thông tin để trả lời, hãy trả lời:
 "Tôi chưa đủ thông tin để xác nhận điều này." thay vì đoán.
 Trả lời ngắn gọn, rõ ràng, bằng tiếng Việt."""
+
+
+def _normalize_text(text: str) -> str:
+    text = unicodedata.normalize("NFD", text.lower())
+    text = "".join(ch for ch in text if unicodedata.category(ch) != "Mn")
+    return text
+
+
+def _resolve_source_name(metadata: dict) -> str:
+    return (
+        metadata.get("source")
+        or metadata.get("source_file")
+        or metadata.get("section")
+        or "unknown_source"
+    )
+
+
+def _resolve_doc_type(metadata: dict) -> str:
+    if metadata.get("type"):
+        return metadata["type"]
+    source_name = _resolve_source_name(metadata).lower()
+    if source_name.startswith("article_"):
+        return "news"
+    return "legal"
+
+
+def _extract_relevant_excerpt(query: str, full_text: str, fallback_text: str) -> str:
+    lines = [line.strip() for line in full_text.splitlines() if line.strip()]
+    if not lines:
+        return fallback_text
+
+    normalized_query = _normalize_text(query)
+    query_terms = [term for term in re.findall(r"\w+", normalized_query) if len(term) >= 3]
+
+    best_idx = 0
+    best_score = -1
+    for idx, line in enumerate(lines):
+        normalized_line = _normalize_text(line)
+        score = sum(1 for term in query_terms if term in normalized_line)
+        if score > best_score:
+            best_score = score
+            best_idx = idx
+
+    start = max(0, best_idx - 3)
+    end = min(len(lines), best_idx + 7)
+    excerpt = "\n".join(lines[start:end]).strip()
+    return excerpt if excerpt else fallback_text
+
+
+def _enrich_chunk_for_generation(query: str, chunk: dict) -> dict:
+    enriched = chunk.copy()
+    metadata = dict(enriched.get("metadata", {}) or {})
+    metadata["source"] = _resolve_source_name(metadata)
+    metadata["type"] = _resolve_doc_type(metadata)
+    enriched["metadata"] = metadata
+
+    source_file = metadata.get("source_file")
+    if source_file and enriched.get("source") == "pageindex":
+        candidate_files = list(STANDARDIZED_DIR.rglob(source_file))
+        if candidate_files:
+            full_text = candidate_files[0].read_text(encoding="utf-8")
+            enriched["content"] = _extract_relevant_excerpt(
+                query=query,
+                full_text=full_text,
+                fallback_text=enriched.get("content", ""),
+            )
+
+    return enriched
 
 
 def reorder_for_llm(chunks: list[dict]) -> list[dict]:
@@ -74,8 +146,8 @@ def format_context(chunks: list[dict]) -> str:
     lines = []
     for i, chunk in enumerate(chunks, start=1):
         metadata = chunk.get("metadata", {}) or {}
-        source = metadata.get("source", "unknown_source")
-        doc_type = metadata.get("type", "unknown_type")
+        source = _resolve_source_name(metadata)
+        doc_type = _resolve_doc_type(metadata)
         content = chunk.get("content", "").strip()
 
         lines.append(f"[Tài liệu {i}]")
@@ -145,7 +217,8 @@ def generate_with_citation(query: str, top_k: int = 5) -> dict:
         }
     """
     retrieved_chunks = retrieve(query, top_k=top_k)
-    reordered_chunks = reorder_for_llm(retrieved_chunks)
+    prepared_chunks = [_enrich_chunk_for_generation(query, chunk) for chunk in retrieved_chunks]
+    reordered_chunks = reorder_for_llm(prepared_chunks)
     context = format_context(reordered_chunks)
 
     if not reordered_chunks:
@@ -170,7 +243,7 @@ def generate_with_citation(query: str, top_k: int = 5) -> dict:
     source_names = []
     for chunk in reordered_chunks[:2]:
         metadata = chunk.get("metadata", {}) or {}
-        source = metadata.get("source")
+        source = _resolve_source_name(metadata)
         if source and source not in source_names:
             source_names.append(source)
 
