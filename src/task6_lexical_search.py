@@ -96,12 +96,11 @@ def lexical_search(query: str, top_k: int = 10) -> list[dict]:
 
     results = []
     for idx in top_indices:
-        if scores[idx] > 0:
-            results.append({
-                "content": _corpus[idx]["content"],
-                "score": float(scores[idx]),
-                "metadata": _corpus[idx]["metadata"],
-            })
+        results.append({
+            "content": _corpus[idx]["content"],
+            "score": float(scores[idx]),
+            "metadata": _corpus[idx]["metadata"],
+        })
     results.sort(key=lambda item: item["score"], reverse=True)
     return results[:top_k]
 
